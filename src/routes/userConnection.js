@@ -24,10 +24,11 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
         : parseInt(req.query.limit) || 10;
 
     //* finding all the connections
+    //* finding all the connections
     const connections = await ConnectionRequest.find({
       $or: [
-        { fromUserId: user._id, status: "accepted" },
-        { toUserId: user._id, status: "accepted" },
+        { fromUserId: loggedInUser._id, status: "accepted" }, // Changed 'user' to 'loggedInUser'
+        { toUserId: loggedInUser._id, status: "accepted" },   // Changed 'user' to 'loggedInUser'
       ],
     })
       .populate("fromUserId toUserId", [
@@ -44,6 +45,8 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       .limit(limit);
 
     res.status(200).json({ message: connections });
+
+    
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

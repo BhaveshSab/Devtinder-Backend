@@ -477,7 +477,7 @@ requestRouter.get(
 requestRouter.get(
   "/admin/user/requests/:userId",
   userAuth,
-  userRole("admin"),
+  
   async (req, res) => {
     try {
       const loggedInUser = req.user;
@@ -508,8 +508,9 @@ requestRouter.get(
 
       //* finding all the connection with status
       const userRequests = await ConnectionRequest.find({
-        $or: [{ fromUserId: userId }, { toUserId: userId }],
-      })
+  $or: [{ fromUserId: userId }, { toUserId: userId }],
+  status: "accepted" // <-- Add this line to filter ONLY accepted requests
+})
         .populate("fromUserId toUserId", [
           "firstName",
           "lastName",
