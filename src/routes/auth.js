@@ -96,11 +96,11 @@ authRouter.post("/login", async (req, res) => {
 
       //* adding the token to cookie and send back to user
      res.cookie("token", token, {
-      httpOnly: true,  // CRITICAL: Prevents frontend JavaScript from reading the cookie (protects against XSS attacks)
-      secure: false,   // Set to TRUE in production when you have HTTPS, FALSE for localhost
-      sameSite: "lax", // Protects against Cross-Site Request Forgery (CSRF)
-      maxAge: 7 * 24 * 60 * 60 * 1000 // Cookie lifespan (7 days in milliseconds)
-    });
+  httpOnly: true,
+  secure: true,       // MUST be true for production/HTTPS
+  sameSite: "none",   // MUST be "none" for cross-domain cookies
+  maxAge: 7 * 24 * 60 * 60 * 1000 
+});
       res
         .status(200)
         .json({ succuss: true, message: "Logged successfully", user });
