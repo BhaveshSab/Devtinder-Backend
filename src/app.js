@@ -7,7 +7,7 @@ require("dotenv").config();
 
 //* Middleware to parse incoming JSON requests and cookies
 app.use(cors({
-  origin: "https://devtinder-web-14dc.vercel.app/", // Replace with your exact Vercel URL
+  origin: "https://devtinder-web-14dc.vercel.app", // Replace with your exact Vercel URL
   credentials: true
 }));
 app.use(express.json());
